@@ -3,10 +3,8 @@ class ArticlesController < ApplicationController
 
   # GET /articles or /articles.json
   def index
-    @search = Article.search do
-      fulltext params[:search]
-    end
-    @articles = @search.results
+    @search = params[:search].present? ? Article.search(params[:search]) : Article.all
+    @articles = @search.records
   end
 
   # GET /articles/1 or /articles/1.json
